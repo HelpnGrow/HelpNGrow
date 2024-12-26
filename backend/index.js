@@ -10,7 +10,7 @@ const _dirname = path.resolve();
 
 const allowedOrigins = [
   process.env.FRONTEND_URL,
-  'https://helpngrow.onrender.com',
+  'https://help-n-grow.vercel.app',
 ];
 
 console.log(allowedOrigins,"4654645");
