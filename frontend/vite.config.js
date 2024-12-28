@@ -10,7 +10,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://help-n-grow.vercel.app/', // Your backend API URL
+        target: 'http://localhost:3000', // Your backend API URL
         changeOrigin: true,
         secure: false, // If you are using HTTPS with a self-signed cert
       },
