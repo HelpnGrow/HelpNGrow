@@ -3,6 +3,7 @@
 const mongoose = require('mongoose')
 const RequestModel = require('../models/requestModel');
 const Client = require('../models/clientModel');  // Assuming your Client model is in this path
+const clientModel = require('../models/clientModel');
 
 
 // Helper function to get the required number of links based on the user's level
@@ -381,8 +382,43 @@ exports.clientFinancialDetails = async(req,res) =>{
           },
         });
       } catch (error) {
-        console.log(error,"hhhhh");
         
         res.status(500).json({ message: "Error fetching client details", error });
       }
     };
+
+
+    exports.clientProfileDetails = async (req, res) => {
+        const epin = req.body.epin;
+        const { firstName, lastName, email, address, contactNumber, city, state } = req.body;
+    
+        try {
+            const client = await Client.findOneAndUpdate(
+                { epin: epin }, 
+                {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    address: address,
+                    contactNumber: contactNumber,
+                    city: city,
+                    state: state
+                }, 
+                { new: true } 
+            );
+    
+            if (!client) {
+                return res.status(404).json({ message: "Client not found" });
+            }
+    
+            
+            res.status(200).json({
+                message: "Client profile updated successfully",
+                client: client
+            });
+    
+        } catch (error) {
+            res.status(500).json({ message: "Error updating client profile details", error });
+        }
+    }
+    
